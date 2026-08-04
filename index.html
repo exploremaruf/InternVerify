@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Record Portal</title>
+  <?!= include('style'); ?>
+</head>
+<body>
+  <div class="page">
+    <div class="container">
+
+      <header class="app-header">
+        <div class="logo-circle">🎓</div>
+        <h1>Student Record Portal</h1>
+        <p class="subtitle">Enter your Board Roll and Mobile Number to view your record</p>
+      </header>
+
+      <form id="searchForm" class="search-card" autocomplete="off">
+        <div class="form-group">
+          <label for="boardRoll">Board Roll</label>
+          <input
+            type="text"
+            id="boardRoll"
+            name="boardRoll"
+            placeholder="e.g. 123456"
+            inputmode="numeric"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="mobile">Mobile Number</label>
+          <input
+            type="text"
+            id="mobile"
+            name="mobile"
+            placeholder="e.g. 01712345678"
+            inputmode="tel"
+            required
+          />
+        </div>
+
+        <button type="submit" id="searchBtn" class="btn-search">
+          <span class="btn-text">Search Record</span>
+        </button>
+
+        <p id="formError" class="form-error" hidden></p>
+      </form>
+
+      <div id="statusBox" class="status-box" hidden>
+        <div class="spinner"></div>
+        <p>Fetching your record...</p>
+      </div>
+
+      <div id="messageBox" class="message-box" hidden></div>
+
+      <div id="resultCard" class="result-card" hidden></div>
+
+    </div>
+
+    <footer class="app-footer">
+      <p>&copy; <span id="year"></span> Student Record Portal</p>
+    </footer>
+  </div>
+
+  <?!= include('script'); ?>
+</body>
+</html>
