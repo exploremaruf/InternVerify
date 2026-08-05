@@ -8,10 +8,8 @@
  *  IMPORTANT — CONFIGURE THESE TWO VALUES BEFORE DEPLOYING:
  * ============================================================
  */
-const SHEET_ID   = '15cX8ZBGFA1jLJZM3GPaawUCQYWsUaEvV';
-const SHEET_NAME = 'Sheet1'; // <-- Change this to the EXACT tab name that holds the data
-                              //     (the gid in your URL is 300541239 — open the sheet and
-                              //      check the tab name at the bottom of the screen)
+const SHEET_ID   = '1PwVM3xEmvRyWBbHJ0iaCnbuopdHw_0_jx3H-PDYPd8M';
+const SHEET_NAME = 'Sheet1';
 
 /**
  * Column headers exactly as they must appear in ROW 1 of your sheet.
@@ -19,7 +17,7 @@ const SHEET_NAME = 'Sheet1'; // <-- Change this to the EXACT tab name that holds
  * on the right-hand side below so they match your sheet exactly.
  */
 const COLUMNS = {
-  studentName:     "Student's Name",
+  studentName:     "Student`s Name",
   boardRoll:       "Board Roll",
   regNo:           "Reg. No",
   session:         "Session",
@@ -29,7 +27,7 @@ const COLUMNS = {
   industryMobile:  "Industry Mobile Number",
   industryAddress: "Industry Address",
   industryWebsite: "Industry Website",
-  rocketMobile:    "Rocket Acc. Mobile No."
+  rocketMobile:    "Rocket Acc."
 };
 
 /**
