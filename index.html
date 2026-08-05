@@ -4,6 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Student Record Portal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0"
+  />
+
   <?!= include('style'); ?>
 </head>
 <body>
@@ -11,37 +23,40 @@
     <div class="container">
 
       <header class="app-header">
-        <div class="logo-circle">🎓</div>
+        <div class="logo-avatar">
+          <span class="material-symbols-rounded" aria-hidden="true">school</span>
+        </div>
         <h1>Student Record Portal</h1>
         <p class="subtitle">Enter your Board Roll and Mobile Number to view your record</p>
       </header>
 
       <form id="searchForm" class="search-card" autocomplete="off">
-        <div class="form-group">
-          <label for="boardRoll">Board Roll</label>
+        <div class="text-field">
           <input
             type="text"
             id="boardRoll"
             name="boardRoll"
-            placeholder="e.g. 123456"
+            placeholder=" "
             inputmode="numeric"
             required
           />
+          <label for="boardRoll">Board Roll</label>
         </div>
 
-        <div class="form-group">
-          <label for="mobile">Mobile Number</label>
+        <div class="text-field">
           <input
             type="text"
             id="mobile"
             name="mobile"
-            placeholder="e.g. 01712345678"
+            placeholder=" "
             inputmode="tel"
             required
           />
+          <label for="mobile">Mobile Number</label>
         </div>
 
-        <button type="submit" id="searchBtn" class="btn-search">
+        <button type="submit" id="searchBtn" class="btn-filled">
+          <span class="material-symbols-rounded" aria-hidden="true">search</span>
           <span class="btn-text">Search Record</span>
         </button>
 
@@ -49,8 +64,8 @@
       </form>
 
       <div id="statusBox" class="status-box" hidden>
-        <div class="spinner"></div>
-        <p>Fetching your record...</p>
+        <div class="spinner" role="status" aria-label="Loading"></div>
+        <p>Fetching your record…</p>
       </div>
 
       <div id="messageBox" class="message-box" hidden></div>
