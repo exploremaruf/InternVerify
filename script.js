@@ -1,38 +1,27 @@
-/* ============================================================
-   STUDENT RECORD PORTAL — script.js
-   NOTE: Inside the Apps Script editor this content must live in
-   a file named "script.html", wrapped like:
-     <script> ...this whole file... </script>
-   ============================================================ */
-
+<script>
 (function () {
   'use strict';
 
-  /**
-   * IMPORTANT:
-   * Because this script is served BY the same Apps Script web app
-   * it is calling, you can leave WEB_APP_URL as an empty string —
-   * the code will automatically fetch relative to its own URL and
-   * you will hit zero CORS issues.
-   *
-   * If you ever host this frontend somewhere ELSE (e.g. GitHub Pages)
-   * and only use Apps Script as an API, paste your deployed
-   * "…/exec" Web App URL below instead.
-   */
-  const WEB_APP_URL = ''; // e.g. 'https://script.google.com/macros/s/AKfycb.../exec'
+  // Hardcoded to the deployed Web App URL — required because the page
+  // itself loads inside a script.googleusercontent.com iframe, so
+  // window.location.href does NOT point at the real /exec endpoint.
+  //
+  // IMPORTANT: if you ever create a brand-new deployment (not just a
+  // new version of the existing one), update this URL to match.
+  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzGvR7KZ0ufagreQ1Q9UZjQ0kVt_OGpWybtxQRgnBINc4Syb_W-UIvhotO8jIBkaUuh/exec';
 
   const FIELD_LABELS = [
-    { key: 'studentName',     label: "Student's Name" },
-    { key: 'boardRoll',       label: 'Board Roll' },
-    { key: 'regNo',           label: 'Reg. No' },
-    { key: 'session',         label: 'Session' },
-    { key: 'mobile',          label: 'Communicating Mobile No' },
-    { key: 'preferredField',  label: 'Preferred Field' },
-    { key: 'industryName',    label: 'Industry Name' },
-    { key: 'industryMobile',  label: 'Industry Mobile Number' },
-    { key: 'industryAddress', label: 'Industry Address' },
-    { key: 'industryWebsite', label: 'Industry Website' },
-    { key: 'rocketMobile',    label: 'Rocket Acc. Mobile No.' }
+    { key: 'studentName',     label: "Student's Name",         icon: 'person',                mono: false },
+    { key: 'boardRoll',       label: 'Board Roll',             icon: 'badge',                  mono: true },
+    { key: 'regNo',           label: 'Reg. No',                icon: 'fingerprint',             mono: true },
+    { key: 'session',         label: 'Session',                icon: 'calendar_month',          mono: false },
+    { key: 'mobile',          label: 'Communicating Mobile No', icon: 'call',                   mono: true },
+    { key: 'preferredField',  label: 'Preferred Field',        icon: 'work',                    mono: false },
+    { key: 'industryName',    label: 'Industry Name',          icon: 'apartment',               mono: false },
+    { key: 'industryMobile',  label: 'Industry Mobile Number', icon: 'phone_in_talk',           mono: true },
+    { key: 'industryAddress', label: 'Industry Address',       icon: 'location_on',             mono: false },
+    { key: 'industryWebsite', label: 'Industry Website',       icon: 'language',                mono: false },
+    { key: 'rocketMobile',    label: 'Rocket Acc.',            icon: 'account_balance_wallet',  mono: true }
   ];
 
   const form        = document.getElementById('searchForm');
@@ -104,8 +93,7 @@
       mobile: mobile
     });
 
-    const base = WEB_APP_URL || window.location.href.split('?')[0];
-    const url  = base + '?' + params.toString();
+    const url = WEB_APP_URL + '?' + params.toString();
 
     fetch(url, { method: 'GET' })
       .then(function (res) {
@@ -145,29 +133,36 @@
 
   function renderResult(data) {
     const rowsHtml = FIELD_LABELS.map(function (field) {
-      const rawValue = data[field.key] || '—';
-      const value = formatValue(field.key, rawValue);
+      const rawValue = data[field.key] || '\u2014';
+      const value = formatValue(field, rawValue);
+      const monoClass = field.mono ? ' mono' : '';
       return (
         '<div class="result-row">' +
-        '<span class="label">' + escapeHtml(field.label) + '</span>' +
-        '<span class="value">' + value + '</span>' +
+        '<span class="material-symbols-rounded row-icon" aria-hidden="true">' + field.icon + '</span>' +
+        '<div class="row-text">' +
+        '<span class="row-label">' + escapeHtml(field.label) + '</span>' +
+        '<span class="row-value' + monoClass + '">' + value + '</span>' +
+        '</div>' +
         '</div>'
       );
     }).join('');
 
     resultCard.innerHTML =
       '<div class="result-header">' +
+      '<div class="result-avatar"><span class="material-symbols-rounded" aria-hidden="true">verified</span></div>' +
+      '<div>' +
       '<h2>' + escapeHtml(data.studentName || 'Student Record') + '</h2>' +
-      '<p>Record found successfully</p>' +
+      '<p><span class="material-symbols-rounded" aria-hidden="true">check_circle</span> Record found successfully</p>' +
+      '</div>' +
       '</div>' +
       '<div class="result-body">' + rowsHtml + '</div>';
 
     showEl(resultCard);
   }
 
-  function formatValue(key, rawValue) {
+  function formatValue(field, rawValue) {
     const safe = escapeHtml(rawValue);
-    if (key === 'industryWebsite' && rawValue && rawValue !== '—') {
+    if (field.key === 'industryWebsite' && rawValue && rawValue !== '\u2014') {
       const href = /^https?:\/\//i.test(rawValue) ? rawValue : 'https://' + rawValue;
       return '<a href="' + escapeAttr(href) + '" target="_blank" rel="noopener">' + safe + '</a>';
     }
@@ -195,3 +190,4 @@
     el.hidden = true;
   }
 })();
+</script>
